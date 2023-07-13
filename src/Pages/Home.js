@@ -6,9 +6,10 @@ import SearchExercise from "../Component/SearchExercise";
 import Exercise from "../Component/Exercise";
 
 const Home = () => {
-  const [bodyPart, setBodyPart] = useState([]);
+  const [bodyPart, setBodyPart] = useState("all");
   // // Filter Data
   const [exercise, setExercise] = useState([]);
+  console.log("bodyPart =>", bodyPart);
   return (
     <Box>
       <HeroBanner />
