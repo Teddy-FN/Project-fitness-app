@@ -29,7 +29,6 @@ const SearchExercise = ({ setExercise, bodyPart, setBodyPart }) => {
       );
 
       // Filter Data
-      console.log("exerciseData =>", exerciseData);
       const filtredDataExercise = exerciseData.filter(
         (items) =>
           items.name.toLowerCase().includes(search) ||
@@ -37,7 +36,6 @@ const SearchExercise = ({ setExercise, bodyPart, setBodyPart }) => {
           items.equipment.toLowerCase().includes(search) ||
           items.bodyPart.toLowerCase().includes(search)
       );
-      console.log("filtredDataExercise =>", filtredDataExercise);
 
       setSearch("");
       setExercise(filtredDataExercise);
