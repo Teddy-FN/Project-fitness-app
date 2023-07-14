@@ -10,7 +10,11 @@ import SimiliarExercise from "../Component/SimiliarExercise";
 const ExerciseDetail = () => {
   const { id } = useParams();
   const [exerciseDetail, setExerciseDetail] = useState({});
-  const [exerciseVideoData, setExerciseVideoData] = useState({});
+  const [exerciseVideoData, setExerciseVideoData] = useState([]);
+  const [targetData, setTargetData] = useState([]);
+  const [equipmentData, setEquipmentData] = useState([]);
+
+  console.log("exerciseDetail =>", exerciseDetail);
 
   useEffect(() => {
     const fetchExerciseData = async () => {
@@ -27,11 +31,24 @@ const ExerciseDetail = () => {
 
       // Get Exercise Video Data
       const exerciseVideosData = await fetchData(
-        `${youtubeSearchUrl}/search?q=${exerciseDetailData.name}`,
+        `${youtubeSearchUrl}/search?query=${exerciseDetailData.name}`,
         youtubeOptions
       );
+      setExerciseVideoData(exerciseVideosData.contents);
 
-      setExerciseVideoData(exerciseVideosData);
+      // Target Muscle Exercise Data
+      const targetMuscleExerciseData = await fetchData(
+        `${exerciseDbUrl}/exercises/target/${exerciseDetailData.target}`,
+        exerciseOptions
+      );
+      setTargetData(targetMuscleExerciseData);
+
+      // Equipment Muscle Exercise Data
+      const equipmentExerciseData = await fetchData(
+        `${exerciseDbUrl}/exercises/equipment/${exerciseDetailData.equipment}`,
+        exerciseOptions
+      );
+      setEquipmentData(equipmentExerciseData);
     };
     fetchExerciseData();
   }, [id]);
@@ -43,7 +60,10 @@ const ExerciseDetail = () => {
         exerciseVideo={exerciseVideoData}
         name={exerciseDetail.name}
       />
-      <SimiliarExercise />
+      <SimiliarExercise
+        targetMuscleExercise={targetData}
+        equipmentExercise={equipmentData}
+      />
     </Box>
   );
 };
